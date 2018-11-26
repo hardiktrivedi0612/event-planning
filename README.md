@@ -1,1 +1,1 @@
-# event-planning-ws
+# event-planning
