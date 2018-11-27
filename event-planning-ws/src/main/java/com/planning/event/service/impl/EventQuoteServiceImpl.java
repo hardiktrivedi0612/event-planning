@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.planning.event.domain.EventQuoteRequest;
@@ -25,14 +26,23 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 	private EventQuoteTransactionalService eventQuoteTransactionalService;
 	private HeadCountQuoteCalculationServiceImpl headCountQuoteCalculationServiceImpl;
 	private WeatherConditionQuoteCalculationServiceImpl weatherConditionQuoteCalculationServiceImpl;
+	private MonthConditionQuoteCalculationServiceImpl monthConditionQuoteCalculationServiceImpl;
+	private EventTypeQuoteCalculationServiceImpl eventTypeQuoteCalculationServiceImpl;
+	private ApplicationContext applicationContext;
 
 	EventQuoteServiceImpl(ValidationUtil validationUtil, EventQuoteTransactionalService eventQuoteTransactionalService,
 			HeadCountQuoteCalculationServiceImpl headCountQuoteCalculationServiceImpl,
-			WeatherConditionQuoteCalculationServiceImpl weatherConditionQuoteCalculationServiceImpl) {
+			WeatherConditionQuoteCalculationServiceImpl weatherConditionQuoteCalculationServiceImpl,
+			MonthConditionQuoteCalculationServiceImpl monthConditionQuoteCalculationServiceImpl,
+			EventTypeQuoteCalculationServiceImpl eventTypeQuoteCalculationServiceImpl,
+			ApplicationContext applicationContext) {
 		this.validationUtil = validationUtil;
 		this.eventQuoteTransactionalService = eventQuoteTransactionalService;
 		this.headCountQuoteCalculationServiceImpl = headCountQuoteCalculationServiceImpl;
 		this.weatherConditionQuoteCalculationServiceImpl = weatherConditionQuoteCalculationServiceImpl;
+		this.monthConditionQuoteCalculationServiceImpl = monthConditionQuoteCalculationServiceImpl;
+		this.eventTypeQuoteCalculationServiceImpl = eventTypeQuoteCalculationServiceImpl;
+		this.applicationContext = applicationContext;
 	}
 
 	/**
@@ -93,6 +103,12 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 	private BigDecimal calculateQuotePrice(EventQuoteRequest request) {
 		BigDecimal quotePrice = BigDecimal.ZERO;
 
+		// for(QuoteCalculationService service :
+		// applicationContext.getBeansOfType(QuoteCalculationService.class).values())
+		// {
+		// quotePrice = quotePrice.add(service.calculateQuotePrice(request));
+		// }
+
 		// 1. Add the head count price to the quote
 		quotePrice = quotePrice.add(headCountQuoteCalculationServiceImpl.calculateQuotePrice(request));
 
@@ -100,8 +116,10 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 		quotePrice = quotePrice.add(weatherConditionQuoteCalculationServiceImpl.calculateQuotePrice(request));
 
 		// 3. Add the month price to the quote
+		quotePrice = quotePrice.add(monthConditionQuoteCalculationServiceImpl.calculateQuotePrice(request));
 
 		// 4. Subtract the event type discount to the quote
+		quotePrice = quotePrice.add(eventTypeQuoteCalculationServiceImpl.calculateQuotePrice(request));
 
 		// 5. Return the quote price
 		return quotePrice;

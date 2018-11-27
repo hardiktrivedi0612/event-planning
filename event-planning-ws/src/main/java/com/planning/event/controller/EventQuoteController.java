@@ -42,11 +42,11 @@ public class EventQuoteController {
 	 * @date Nov 26, 2018
 	 * @param request
 	 * @return
-	 * @throws ValidationException 
+	 * @throws ValidationException
 	 */
 	@PostMapping(value = "/quote", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<EventQuoteResponse> createEventQuote(@RequestBody @Valid EventQuoteRequest request) throws ValidationException {
-		// TODO: to write why I didn't use created
+	public ResponseEntity<EventQuoteResponse> createEventQuote(@RequestBody @Valid EventQuoteRequest request)
+			throws ValidationException {
 		return new ResponseEntity<EventQuoteResponse>(eventQuoteService.createEventQuote(request), HttpStatus.OK);
 	}
 

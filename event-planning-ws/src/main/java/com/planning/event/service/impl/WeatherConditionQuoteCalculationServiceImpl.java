@@ -58,6 +58,7 @@ public class WeatherConditionQuoteCalculationServiceImpl implements QuoteCalcula
 		if (ChronoUnit.DAYS.between(LocalDate.now(), request.getEventDate()) > 10) {
 			// We cannot estimate the quote price for weather conditions if it
 			// is greater than 10 days
+			logger.info("Not making API call for weather forecast");
 			return price;
 		}
 
@@ -83,6 +84,14 @@ public class WeatherConditionQuoteCalculationServiceImpl implements QuoteCalcula
 
 	}
 
+	/**
+	 * TODO
+	 * 
+	 * @author hatrivedi
+	 * @date Nov 26, 2018
+	 * @param request
+	 * @return
+	 */
 	private YahooWeatherResponse callYahooWeatherAPI(EventQuoteRequest request) {
 		try {
 			UriComponentsBuilder builder = UriComponentsBuilder

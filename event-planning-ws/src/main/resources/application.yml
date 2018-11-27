@@ -2,14 +2,25 @@ server:
   port: 10001
   
 head-count-quote-config:
-  priceByRange:
+  price-by-range:
     1: 2000
     101: 1500
     501: 1000
     
 weather-condition-quote-config:
-  conditionList:
+  condition-list:
   - cold
   - rainy
-  quotePrice: 5000
+  quote-price: 5000
 
+month-condition-quote-config:
+  months-list:
+  - 1
+  - 11
+  - 12
+  quote-price: 3000
+  
+event-type-quote-config:
+  event-type-list:
+  - MUSICAL
+  quote-price: -1000

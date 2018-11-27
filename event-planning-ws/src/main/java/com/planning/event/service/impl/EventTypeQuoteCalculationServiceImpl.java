@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
+import com.planning.event.constants.EventTypes;
 import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.service.QuoteCalculationService;
 
@@ -16,32 +17,32 @@ import com.planning.event.service.QuoteCalculationService;
  * @date Nov 26, 2018
  */
 @Service
-@ConfigurationProperties("month-condition-quote-config")
-public class MonthConditionQuoteCalculationServiceImpl implements QuoteCalculationService {
+@ConfigurationProperties("event-type-quote-config")
+public class EventTypeQuoteCalculationServiceImpl implements QuoteCalculationService {
 
-	private Set<Integer> monthsList;
+	private Set<EventTypes> eventTypeList;
 
 	private BigDecimal quotePrice;
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * Implementation Notes: TODO
+	 * TODO
 	 */
 	@Override
 	public BigDecimal calculateQuotePrice(EventQuoteRequest request) {
-		if (monthsList.contains(request.getEventDate().getMonthValue())) {
+		if (eventTypeList.contains(request.getEventType())) {
 			return quotePrice;
 		}
 		return BigDecimal.ZERO;
 	}
 
-	public Set<Integer> getMonthsList() {
-		return monthsList;
+	public Set<EventTypes> getEventTypeList() {
+		return eventTypeList;
 	}
 
-	public void setMonthsList(Set<Integer> monthsList) {
-		this.monthsList = monthsList;
+	public void setEventTypeList(Set<EventTypes> eventTypeList) {
+		this.eventTypeList = eventTypeList;
 	}
 
 	public BigDecimal getQuotePrice() {
