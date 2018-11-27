@@ -6,11 +6,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
+import com.planning.event.EventPlanningWsApplicationTests;
 import com.planning.event.constants.EventTypes;
 import com.planning.event.domain.EventQuoteDetails;
 import com.planning.event.domain.EventQuoteRequest;
@@ -20,12 +18,12 @@ import com.planning.event.exception.ValidationException;
 import com.planning.event.util.EventQuoteRequestUtil;
 
 /**
+ * JUnit test cases for Service class
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class EventQuoteServiceTest {
+public class EventQuoteServiceTest extends EventPlanningWsApplicationTests{
 
 	@Autowired
 	private EventQuoteService eventQuoteService;
@@ -110,7 +108,7 @@ public class EventQuoteServiceTest {
 		request.setPhoneNumber("110011");
 		eventQuoteService.createEventQuote(request);
 	}
-	
+
 	@Test(expected = ValidationException.class)
 	public void invalidEmailTest() throws ValidationException, EventQuoteNotFoundException {
 		EventQuoteRequest request = EventQuoteRequestUtil.createDummyObject();
