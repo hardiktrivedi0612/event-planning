@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.exception.EventQuoteNotFoundException;
+import com.planning.event.exception.ValidationException;
 import com.planning.event.service.EventQuoteService;
 import com.planning.event.service.EventQuoteTransactionalService;
+import com.planning.event.util.ValidationUtil;
 
 /**
  * @author hatrivedi
@@ -19,30 +21,43 @@ import com.planning.event.service.EventQuoteTransactionalService;
 @Service
 public class EventQuoteServiceImpl implements EventQuoteService {
 
+	private ValidationUtil validationUtil;
 	private EventQuoteTransactionalService eventQuoteTransactionalService;
+	private HeadCountQuoteCalculationServiceImpl headCountQuoteCalculationServiceImpl;
+	private WeatherConditionQuoteCalculationServiceImpl weatherConditionQuoteCalculationServiceImpl;
 
-	EventQuoteServiceImpl(EventQuoteTransactionalService eventQuoteTransactionalService) {
+	EventQuoteServiceImpl(ValidationUtil validationUtil, EventQuoteTransactionalService eventQuoteTransactionalService,
+			HeadCountQuoteCalculationServiceImpl headCountQuoteCalculationServiceImpl,
+			WeatherConditionQuoteCalculationServiceImpl weatherConditionQuoteCalculationServiceImpl) {
+		this.validationUtil = validationUtil;
 		this.eventQuoteTransactionalService = eventQuoteTransactionalService;
+		this.headCountQuoteCalculationServiceImpl = headCountQuoteCalculationServiceImpl;
+		this.weatherConditionQuoteCalculationServiceImpl = weatherConditionQuoteCalculationServiceImpl;
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @throws ValidationException
 	 */
 	@Override
-	public EventQuoteResponse createEventQuote(EventQuoteRequest request) {
+	public EventQuoteResponse createEventQuote(EventQuoteRequest request) throws ValidationException {
 
 		EventQuoteResponse response = new EventQuoteResponse();
 
-		// 1. Copy properties to response object
+		// 1. Validate the input
+		validationUtil.validateEventQuoteRequest(request);
+
+		// 2. Copy properties to response object
 		BeanUtils.copyProperties(request, response);
 
-		// 2. Calculate the quote
+		// 3. Calculate the quote
 		response.setQuotePrice(calculateQuotePrice(request));
 
-		// 3. Save the quote to be retrieved later
+		// 4. Save the quote to be retrieved later
 		eventQuoteTransactionalService.saveEventQuote(response);
 
-		// 4. Return the response
+		// 5. Return the response
 		return response;
 
 	}
@@ -79,8 +94,10 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 		BigDecimal quotePrice = BigDecimal.ZERO;
 
 		// 1. Add the head count price to the quote
+		quotePrice = quotePrice.add(headCountQuoteCalculationServiceImpl.calculateQuotePrice(request));
 
 		// 2. Add the weather condition price if needed to the quote
+		quotePrice = quotePrice.add(weatherConditionQuoteCalculationServiceImpl.calculateQuotePrice(request));
 
 		// 3. Add the month price to the quote
 

@@ -1,2 +1,15 @@
 server:
   port: 10001
+  
+head-count-quote-config:
+  priceByRange:
+    1: 2000
+    101: 1500
+    501: 1000
+    
+weather-condition-quote-config:
+  conditionList:
+  - cold
+  - rainy
+  quotePrice: 5000
+

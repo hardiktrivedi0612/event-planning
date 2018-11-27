@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.exception.EventQuoteNotFoundException;
+import com.planning.event.exception.ValidationException;
 import com.planning.event.service.EventQuoteService;
 
 /**
@@ -41,9 +42,10 @@ public class EventQuoteController {
 	 * @date Nov 26, 2018
 	 * @param request
 	 * @return
+	 * @throws ValidationException 
 	 */
 	@PostMapping(value = "/quote", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<EventQuoteResponse> createEventQuote(@RequestBody @Valid EventQuoteRequest request) {
+	public ResponseEntity<EventQuoteResponse> createEventQuote(@RequestBody @Valid EventQuoteRequest request) throws ValidationException {
 		// TODO: to write why I didn't use created
 		return new ResponseEntity<EventQuoteResponse>(eventQuoteService.createEventQuote(request), HttpStatus.OK);
 	}

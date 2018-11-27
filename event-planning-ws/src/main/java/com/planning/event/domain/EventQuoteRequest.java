@@ -1,8 +1,9 @@
 package com.planning.event.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -16,16 +17,32 @@ import com.planning.event.constants.EventTypes;
  */
 public class EventQuoteRequest {
 
-	@NotNull
+	@NotNull(message = "Head count is required to provide a quote")
 	@Positive(message = "Event can be quoted with atleast 1 person")
 	private Integer headCount;
 
-	@NotNull
+	@NotNull(message = "Event type is required to provide a quote")
 	private EventTypes eventType;
 
-	@NotNull
+	@NotNull(message = "Event date is required to provide a quote")
 	@Future(message = "Event can only be quoted for future dates")
-	private Date eventDate;
+	private LocalDate eventDate;
+
+	@NotNull(message = "Name is required to provide a quote")
+	@NotEmpty(message = "Name is required to provide a quote")
+	private String name;
+
+	@NotNull(message = "Phone number is required to provide a quote")
+	@NotEmpty(message = "Phone number is required to provide a quote")
+	private String phoneNumber;
+
+	@NotNull(message = "Email is required to provide a quote")
+	@NotEmpty(message = "Email is required to provide a quote")
+	private String email;
+
+	@NotNull(message = "City is required to provide a quote")
+	@NotEmpty(message = "City is required to provide a quote")
+	private String city;
 
 	// TODO: lombok can be used
 
@@ -45,12 +62,44 @@ public class EventQuoteRequest {
 		this.eventType = eventType;
 	}
 
-	public Date getEventDate() {
+	public LocalDate getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Date eventDate) {
+	public void setEventDate(LocalDate eventDate) {
 		this.eventDate = eventDate;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }

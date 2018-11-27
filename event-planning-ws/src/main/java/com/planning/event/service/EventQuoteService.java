@@ -5,6 +5,7 @@ import java.util.List;
 import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.exception.EventQuoteNotFoundException;
+import com.planning.event.exception.ValidationException;
 
 /**
  * TODO
@@ -21,8 +22,9 @@ public interface EventQuoteService {
 	 * @date Nov 26, 2018
 	 * @param request
 	 * @return
+	 * @throws ValidationException 
 	 */
-	public EventQuoteResponse createEventQuote(EventQuoteRequest request);
+	public EventQuoteResponse createEventQuote(EventQuoteRequest request) throws ValidationException;
 
 	/**
 	 * TODO
