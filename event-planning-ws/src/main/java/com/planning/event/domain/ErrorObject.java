@@ -1,7 +1,7 @@
 package com.planning.event.domain;
 
 /**
- * TODO
+ * Domain class for representing the error responses for APIs
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -9,6 +9,9 @@ package com.planning.event.domain;
 public class ErrorObject {
 	private String code;
 	private String message;
+
+	// For less code, we can use Lombok library for generating these
+	// getters and setters
 
 	/**
 	 * @param code

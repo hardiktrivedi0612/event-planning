@@ -14,7 +14,10 @@ import com.planning.event.exception.EventQuoteNotFoundException;
 import com.planning.event.exception.ValidationException;
 
 /**
- * TODO
+ * Common Controller advice for handling exceptions thrown by the controller
+ * methods. The response of all of the exceptions will be a list of
+ * {@link ErrorObject} which will have a code and a message describing the error
+ * that happened
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -23,7 +26,9 @@ import com.planning.event.exception.ValidationException;
 public class CommonExceptionAdvice {
 
 	/**
-	 * TODO
+	 * Exception handler for {@link EventQuoteNotFoundException} which is thrown
+	 * when the user requests for a quote with a reference id that does not
+	 * exist in our records
 	 * 
 	 * @author hatrivedi
 	 * @date Nov 26, 2018
@@ -39,7 +44,8 @@ public class CommonExceptionAdvice {
 	}
 
 	/**
-	 * TODO
+	 * Exception handler for {@link ValidationException}s that will be thrown
+	 * for input validations that fail
 	 * 
 	 * @author hatrivedi
 	 * @date Nov 26, 2018

@@ -5,6 +5,8 @@ import java.util.List;
 import com.planning.event.domain.ErrorObject;
 
 /**
+ * Exception that will be thrown for any input validations that fail
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
  * @since 2.5

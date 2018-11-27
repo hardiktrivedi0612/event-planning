@@ -9,11 +9,12 @@ import java.util.Random;
 import org.springframework.stereotype.Service;
 
 import com.planning.event.domain.EventQuoteDetails;
-import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.service.EventQuoteTransactionalService;
 
 /**
- * TODO
+ * An memory based implementation of
+ * {@link EventQuoteMemoryTransactionalService} that uses a HashMap to store the
+ * records
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -21,13 +22,20 @@ import com.planning.event.service.EventQuoteTransactionalService;
 @Service
 public class EventQuoteMemoryTransactionalService implements EventQuoteTransactionalService {
 
-	// Concurrent hash map??
 	private Map<String, EventQuoteDetails> memoryMap = new HashMap<>();
 
 	private final String alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	private Random rand = new Random();
 
+	/**
+	 * Method to generate a 6 character identifier for quote identification that
+	 * will be returned to the user
+	 * 
+	 * @author hatrivedi
+	 * @date Nov 27, 2018
+	 * @return
+	 */
 	private String generateRandomQuoteId() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < 6; i++) {

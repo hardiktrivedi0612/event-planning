@@ -10,9 +10,12 @@ import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.service.QuoteCalculationService;
 
 /**
+ * Implementation of {@link QuoteCalculationService} interface where this
+ * calculates the quote estimate based on conditions provided for the head count
+ * for the event
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
- * @since 2.5
  */
 @Service
 @ConfigurationProperties("head-count-quote-config")
@@ -23,7 +26,9 @@ public class HeadCountQuoteCalculationServiceImpl implements QuoteCalculationSer
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * Implementation Notes: TODO
+	 * Implementation Notes: This will return a positive amount based on the
+	 * conditions provided for range of head counts that the event is being
+	 * requested for
 	 */
 	@Override
 	public BigDecimal calculateQuotePrice(EventQuoteRequest request) {

@@ -1,6 +1,10 @@
 package com.planning.event.exception;
 
 /**
+ * 
+ * Exception which is thrown when the user requests for a quote with a reference
+ * id that does not exist in our records
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
  * @since 2.5

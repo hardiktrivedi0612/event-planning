@@ -3,6 +3,8 @@ package com.planning.event.domain.yahooweather;
 import java.util.List;
 
 /**
+ * Domain class representing the response from Yahoo Weather API
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
  */

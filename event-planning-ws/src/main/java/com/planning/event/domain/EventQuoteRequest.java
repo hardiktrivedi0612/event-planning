@@ -10,13 +10,16 @@ import javax.validation.constraints.Positive;
 import com.planning.event.constants.EventTypes;
 
 /**
- * TODO
+ * Domain class that represents the fields that the user will provide as a part
+ * of the request
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
  */
 public class EventQuoteRequest {
 
+	// Assumption: Event can be scheduled for atleast 1 person and not less than
+	// that
 	@NotNull(message = "Head count is required to provide a quote")
 	@Positive(message = "Event can be quoted with atleast 1 person")
 	private Integer headCount;
@@ -24,6 +27,7 @@ public class EventQuoteRequest {
 	@NotNull(message = "Event type is required to provide a quote")
 	private EventTypes eventType;
 
+	// Assumption: Event date cannot be today or before today
 	@NotNull(message = "Event date is required to provide a quote")
 	@Future(message = "Event can only be quoted for future dates")
 	private LocalDate eventDate;
@@ -44,7 +48,8 @@ public class EventQuoteRequest {
 	@NotEmpty(message = "City is required to provide a quote")
 	private String city;
 
-	// TODO: lombok can be used
+	// For less code, we can use Lombok library for generating these
+	// getters and setters
 
 	public Integer getHeadCount() {
 		return headCount;

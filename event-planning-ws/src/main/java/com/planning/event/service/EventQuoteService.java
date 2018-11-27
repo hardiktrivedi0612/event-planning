@@ -9,7 +9,7 @@ import com.planning.event.exception.EventQuoteNotFoundException;
 import com.planning.event.exception.ValidationException;
 
 /**
- * TODO
+ * Service interface for all service methods related to quote estimation
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -17,7 +17,17 @@ import com.planning.event.exception.ValidationException;
 public interface EventQuoteService {
 
 	/**
-	 * TODO
+	 * Method that will perform the following steps:
+	 * <p>
+	 * 1. Calculate the quote estimate from the given input request
+	 * <p>
+	 * 2. Save the quote details with input details and quote estimate
+	 * <p>
+	 * 3. Return the quote estimate and reference id for the quote
+	 * 
+	 * 
+	 * <p>
+	 * This will throw a {@link ValidationException} when the input is invalid
 	 * 
 	 * @author hatrivedi
 	 * @date Nov 26, 2018
@@ -30,7 +40,11 @@ public interface EventQuoteService {
 			throws ValidationException, EventQuoteNotFoundException;
 
 	/**
-	 * TODO
+	 * Method that will fetch the quote details given the quote id provided by
+	 * the user.
+	 * <p>
+	 * This will throw {@link EventQuoteNotFoundException} if there is no quote
+	 * estimate for the given reference id
 	 * 
 	 * @author hatrivedi
 	 * @date Nov 26, 2018
@@ -40,7 +54,8 @@ public interface EventQuoteService {
 	public EventQuoteDetails getEventQuote(String quoteId) throws EventQuoteNotFoundException;
 
 	/**
-	 * TODO
+	 * Method that will return all of the quote estimates that have been created
+	 * by users
 	 * 
 	 * @author hatrivedi
 	 * @date Nov 26, 2018

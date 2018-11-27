@@ -11,7 +11,9 @@ import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.service.QuoteCalculationService;
 
 /**
- * TODO
+ * Implementation of {@link QuoteCalculationService} interface where this
+ * calculates the quote estimate based on conditions provided for the type of
+ * the event
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -27,7 +29,9 @@ public class EventTypeQuoteCalculationServiceImpl implements QuoteCalculationSer
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * TODO
+	 * Implementation Notes: This will return a negative price (which is present
+	 * in the config) if the request event type is present in the eligible event
+	 * types list
 	 */
 	@Override
 	public BigDecimal calculateQuotePrice(EventQuoteRequest request) {

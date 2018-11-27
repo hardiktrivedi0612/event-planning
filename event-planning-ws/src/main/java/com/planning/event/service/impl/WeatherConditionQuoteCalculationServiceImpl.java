@@ -23,7 +23,9 @@ import com.planning.event.domain.yahooweather.YahooWeatherResponse;
 import com.planning.event.service.QuoteCalculationService;
 
 /**
- * TODO
+ * Implementation of {@link QuoteCalculationService} interface where this
+ * calculates the quote estimate based on conditions provided for the weather
+ * condition on the event day for the requested city
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -44,7 +46,12 @@ public class WeatherConditionQuoteCalculationServiceImpl implements QuoteCalcula
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * Implementation Notes: TODO
+	 * Implementation Notes: This will return a positive amount if the weather
+	 * conditions match the provided configs on the event day for the city.
+	 * <p>
+	 * Since Yahoo weather API does not provide a forecast of more than 10 days,
+	 * if the requested day is within 10 days, the api is called and the weather
+	 * is checked
 	 */
 	@Override
 	public BigDecimal calculateQuotePrice(EventQuoteRequest request) {
@@ -85,7 +92,8 @@ public class WeatherConditionQuoteCalculationServiceImpl implements QuoteCalcula
 	}
 
 	/**
-	 * TODO
+	 * Method to make the REST call to the Yahoo weather API to get the weather
+	 * forecast for the requested city
 	 * 
 	 * @author hatrivedi
 	 * @date Nov 26, 2018

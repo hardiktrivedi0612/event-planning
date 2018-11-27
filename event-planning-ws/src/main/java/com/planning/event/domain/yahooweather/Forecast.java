@@ -6,11 +6,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 /**
+ * Domain class representing the response from Yahoo Weather API
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
  */
 public class Forecast {
-	
+
 	@JsonFormat(shape = Shape.STRING, pattern = "dd MMM yyyy")
 	private LocalDate date;
 	private String text;

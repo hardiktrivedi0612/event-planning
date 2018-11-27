@@ -10,9 +10,10 @@ import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.exception.ValidationException;
 
 /**
+ * Utility class for having all validation methods
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
- * @since 2.5
  */
 @Component
 public class ValidationUtil {
@@ -21,6 +22,14 @@ public class ValidationUtil {
 
 	public final String emailValidationRegex = "^(.+)@(.+)$";
 
+	/**
+	 * Validation method to valide the input for an event quote
+	 * 
+	 * @author hatrivedi
+	 * @date Nov 27, 2018
+	 * @param request
+	 * @throws ValidationException
+	 */
 	public void validateEventQuoteRequest(EventQuoteRequest request) throws ValidationException {
 		List<ErrorObject> errors = new ArrayList<>();
 		if (!request.getPhoneNumber().matches(phoneNumberValidationRegex)) {

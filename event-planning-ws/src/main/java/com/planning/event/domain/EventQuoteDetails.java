@@ -10,7 +10,8 @@ import com.planning.event.constants.EventTypes;
 import com.planning.event.controller.EventQuoteController;
 
 /**
- * TODO
+ * Domain class representing all of the details related to a quote estimate that
+ * will be saved and returned to the user
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -30,7 +31,8 @@ public class EventQuoteDetails extends ResourceSupport {
 		this.add(ControllerLinkBuilder.linkTo(EventQuoteController.class).slash(this.quoteId).withSelfRel());
 	}
 
-	// TODO: lombok can be used
+	// For less code, we can use Lombok library for generating these
+	// getters and setters
 
 	public String getQuoteId() {
 		return quoteId;

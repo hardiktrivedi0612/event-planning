@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -14,37 +15,26 @@ import com.planning.event.exception.EventQuoteNotFoundException;
 import com.planning.event.exception.ValidationException;
 import com.planning.event.service.EventQuoteService;
 import com.planning.event.service.EventQuoteTransactionalService;
+import com.planning.event.service.QuoteCalculationService;
 import com.planning.event.util.ValidationUtil;
 
 /**
+ * Service implementation class for {@link EventQuoteService}
+ * 
  * @author hatrivedi
  * @date Nov 26, 2018
  */
 @Service
 public class EventQuoteServiceImpl implements EventQuoteService {
 
+	@Autowired
 	private ValidationUtil validationUtil;
-	private EventQuoteTransactionalService eventQuoteTransactionalService;
-	private HeadCountQuoteCalculationServiceImpl headCountQuoteCalculationServiceImpl;
-	private WeatherConditionQuoteCalculationServiceImpl weatherConditionQuoteCalculationServiceImpl;
-	private MonthConditionQuoteCalculationServiceImpl monthConditionQuoteCalculationServiceImpl;
-	private EventTypeQuoteCalculationServiceImpl eventTypeQuoteCalculationServiceImpl;
-	private ApplicationContext applicationContext;
 
-	EventQuoteServiceImpl(ValidationUtil validationUtil, EventQuoteTransactionalService eventQuoteTransactionalService,
-			HeadCountQuoteCalculationServiceImpl headCountQuoteCalculationServiceImpl,
-			WeatherConditionQuoteCalculationServiceImpl weatherConditionQuoteCalculationServiceImpl,
-			MonthConditionQuoteCalculationServiceImpl monthConditionQuoteCalculationServiceImpl,
-			EventTypeQuoteCalculationServiceImpl eventTypeQuoteCalculationServiceImpl,
-			ApplicationContext applicationContext) {
-		this.validationUtil = validationUtil;
-		this.eventQuoteTransactionalService = eventQuoteTransactionalService;
-		this.headCountQuoteCalculationServiceImpl = headCountQuoteCalculationServiceImpl;
-		this.weatherConditionQuoteCalculationServiceImpl = weatherConditionQuoteCalculationServiceImpl;
-		this.monthConditionQuoteCalculationServiceImpl = monthConditionQuoteCalculationServiceImpl;
-		this.eventTypeQuoteCalculationServiceImpl = eventTypeQuoteCalculationServiceImpl;
-		this.applicationContext = applicationContext;
-	}
+	@Autowired
+	private EventQuoteTransactionalService eventQuoteTransactionalService;
+
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	/**
 	 * {@inheritDoc}
@@ -102,7 +92,12 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 	}
 
 	/**
-	 * TODO
+	 * Method that will iterate through all of the implementations of
+	 * {@link QuoteCalculationService} and calculate the final quote estimate
+	 * <p>
+	 * If any new conditions have to be added to the quote estimate calculation,
+	 * a new implementation of {@link QuoteCalculationService} interface can be
+	 * added and this will automatically take that into consideration
 	 * 
 	 * @author hatrivedi
 	 * @date Nov 26, 2018
@@ -111,26 +106,10 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 	 */
 	private BigDecimal calculateQuotePrice(EventQuoteRequest request) {
 		BigDecimal quotePrice = BigDecimal.ZERO;
-
-		// for(QuoteCalculationService service :
-		// applicationContext.getBeansOfType(QuoteCalculationService.class).values())
-		// {
-		// quotePrice = quotePrice.add(service.calculateQuotePrice(request));
-		// }
-
-		// 1. Add the head count price to the quote
-		quotePrice = quotePrice.add(headCountQuoteCalculationServiceImpl.calculateQuotePrice(request));
-
-		// 2. Add the weather condition price if needed to the quote
-		quotePrice = quotePrice.add(weatherConditionQuoteCalculationServiceImpl.calculateQuotePrice(request));
-
-		// 3. Add the month price to the quote
-		quotePrice = quotePrice.add(monthConditionQuoteCalculationServiceImpl.calculateQuotePrice(request));
-
-		// 4. Subtract the event type discount to the quote
-		quotePrice = quotePrice.add(eventTypeQuoteCalculationServiceImpl.calculateQuotePrice(request));
-
-		// 5. Return the quote price
+		for (QuoteCalculationService service : applicationContext.getBeansOfType(QuoteCalculationService.class)
+				.values()) {
+			quotePrice = quotePrice.add(service.calculateQuotePrice(request));
+		}
 		return quotePrice;
 
 	}

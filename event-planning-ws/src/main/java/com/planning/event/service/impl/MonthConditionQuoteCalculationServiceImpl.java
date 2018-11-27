@@ -10,7 +10,9 @@ import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.service.QuoteCalculationService;
 
 /**
- * TODO
+ * Implementation of {@link QuoteCalculationService} interface where this
+ * calculates the quote estimate based on conditions provided for the month in
+ * which the event is requested
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
@@ -26,7 +28,9 @@ public class MonthConditionQuoteCalculationServiceImpl implements QuoteCalculati
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * Implementation Notes: TODO
+	 * Implementation Notes: This will return a positive amount (which is
+	 * defined in the config) if the month of the event date falls in the list
+	 * of months provided
 	 */
 	@Override
 	public BigDecimal calculateQuotePrice(EventQuoteRequest request) {
