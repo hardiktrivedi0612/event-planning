@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.planning.event.domain.EventQuoteDetails;
 import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.exception.EventQuoteNotFoundException;
@@ -49,25 +50,33 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 	 * {@inheritDoc}
 	 * 
 	 * @throws ValidationException
+	 * @throws EventQuoteNotFoundException
 	 */
 	@Override
-	public EventQuoteResponse createEventQuote(EventQuoteRequest request) throws ValidationException {
+	public EventQuoteResponse createEventQuote(EventQuoteRequest request)
+			throws ValidationException, EventQuoteNotFoundException {
 
-		EventQuoteResponse response = new EventQuoteResponse();
+		EventQuoteDetails detailResponse = new EventQuoteDetails();
 
 		// 1. Validate the input
 		validationUtil.validateEventQuoteRequest(request);
 
 		// 2. Copy properties to response object
-		BeanUtils.copyProperties(request, response);
+		BeanUtils.copyProperties(request, detailResponse);
 
 		// 3. Calculate the quote
-		response.setQuotePrice(calculateQuotePrice(request));
+		detailResponse.setQuotePrice(calculateQuotePrice(request));
 
 		// 4. Save the quote to be retrieved later
-		eventQuoteTransactionalService.saveEventQuote(response);
+		eventQuoteTransactionalService.saveEventQuote(detailResponse);
 
-		// 5. Return the response
+		// 5. Create the response
+		EventQuoteResponse response = new EventQuoteResponse();
+		response.setQuoteId(detailResponse.getQuoteId());
+		response.setQuotePrice(detailResponse.getQuotePrice());
+		response.createResourceLink();
+
+		// 6. Return the response
 		return response;
 
 	}
@@ -76,8 +85,8 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EventQuoteResponse getEventQuote(String quoteId) throws EventQuoteNotFoundException {
-		EventQuoteResponse response = eventQuoteTransactionalService.getEventQuote(quoteId);
+	public EventQuoteDetails getEventQuote(String quoteId) throws EventQuoteNotFoundException {
+		EventQuoteDetails response = eventQuoteTransactionalService.getEventQuote(quoteId);
 		if (response != null) {
 			return response;
 		}
@@ -88,7 +97,7 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<EventQuoteResponse> getAllEventQuotes() {
+	public List<EventQuoteDetails> getAllEventQuotes() {
 		return eventQuoteTransactionalService.getAllEventQuotes();
 	}
 

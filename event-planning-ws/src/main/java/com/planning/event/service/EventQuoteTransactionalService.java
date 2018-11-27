@@ -2,7 +2,7 @@ package com.planning.event.service;
 
 import java.util.List;
 
-import com.planning.event.domain.EventQuoteResponse;
+import com.planning.event.domain.EventQuoteDetails;
 
 /**
  * TODO
@@ -12,10 +12,10 @@ import com.planning.event.domain.EventQuoteResponse;
  */
 public interface EventQuoteTransactionalService {
 
-	public String saveEventQuote(EventQuoteResponse eventQuote);
+	public String saveEventQuote(EventQuoteDetails eventQuote);
 
-	public EventQuoteResponse getEventQuote(String quoteId);
+	public EventQuoteDetails getEventQuote(String quoteId);
 
-	public List<EventQuoteResponse> getAllEventQuotes();
+	public List<EventQuoteDetails> getAllEventQuotes();
 
 }

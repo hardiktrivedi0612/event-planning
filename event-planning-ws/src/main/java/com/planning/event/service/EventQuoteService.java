@@ -2,6 +2,7 @@ package com.planning.event.service;
 
 import java.util.List;
 
+import com.planning.event.domain.EventQuoteDetails;
 import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.exception.EventQuoteNotFoundException;
@@ -22,9 +23,11 @@ public interface EventQuoteService {
 	 * @date Nov 26, 2018
 	 * @param request
 	 * @return
-	 * @throws ValidationException 
+	 * @throws ValidationException
+	 * @throws EventQuoteNotFoundException
 	 */
-	public EventQuoteResponse createEventQuote(EventQuoteRequest request) throws ValidationException;
+	public EventQuoteResponse createEventQuote(EventQuoteRequest request)
+			throws ValidationException, EventQuoteNotFoundException;
 
 	/**
 	 * TODO
@@ -34,7 +37,7 @@ public interface EventQuoteService {
 	 * @param request
 	 * @return
 	 */
-	public EventQuoteResponse getEventQuote(String quoteId) throws EventQuoteNotFoundException;
+	public EventQuoteDetails getEventQuote(String quoteId) throws EventQuoteNotFoundException;
 
 	/**
 	 * TODO
@@ -44,5 +47,5 @@ public interface EventQuoteService {
 	 * @param request
 	 * @return
 	 */
-	public List<EventQuoteResponse> getAllEventQuotes();
+	public List<EventQuoteDetails> getAllEventQuotes();
 }

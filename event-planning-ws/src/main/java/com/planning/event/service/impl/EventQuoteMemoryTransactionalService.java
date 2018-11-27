@@ -8,6 +8,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import com.planning.event.domain.EventQuoteDetails;
 import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.service.EventQuoteTransactionalService;
 
@@ -21,7 +22,7 @@ import com.planning.event.service.EventQuoteTransactionalService;
 public class EventQuoteMemoryTransactionalService implements EventQuoteTransactionalService {
 
 	// Concurrent hash map??
-	private Map<String, EventQuoteResponse> memoryMap = new HashMap<>();
+	private Map<String, EventQuoteDetails> memoryMap = new HashMap<>();
 
 	private final String alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -39,7 +40,7 @@ public class EventQuoteMemoryTransactionalService implements EventQuoteTransacti
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String saveEventQuote(EventQuoteResponse eventQuote) {
+	public String saveEventQuote(EventQuoteDetails eventQuote) {
 		String quoteId = "EQ" + generateRandomQuoteId();
 		eventQuote.setQuoteId(quoteId);
 		memoryMap.put(quoteId, eventQuote);
@@ -50,7 +51,7 @@ public class EventQuoteMemoryTransactionalService implements EventQuoteTransacti
 	 * {@inheritDoc}
 	 */
 	@Override
-	public EventQuoteResponse getEventQuote(String quoteId) {
+	public EventQuoteDetails getEventQuote(String quoteId) {
 		if (memoryMap.containsKey(quoteId)) {
 			return memoryMap.get(quoteId);
 		}
@@ -61,9 +62,9 @@ public class EventQuoteMemoryTransactionalService implements EventQuoteTransacti
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<EventQuoteResponse> getAllEventQuotes() {
-		List<EventQuoteResponse> eventQuotes = new ArrayList<>();
-		for (Map.Entry<String, EventQuoteResponse> entry : memoryMap.entrySet()) {
+	public List<EventQuoteDetails> getAllEventQuotes() {
+		List<EventQuoteDetails> eventQuotes = new ArrayList<>();
+		for (Map.Entry<String, EventQuoteDetails> entry : memoryMap.entrySet()) {
 			eventQuotes.add(entry.getValue());
 		}
 		return eventQuotes;

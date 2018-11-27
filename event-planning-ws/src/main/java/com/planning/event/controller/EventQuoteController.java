@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.planning.event.domain.EventQuoteDetails;
 import com.planning.event.domain.EventQuoteRequest;
 import com.planning.event.domain.EventQuoteResponse;
 import com.planning.event.exception.EventQuoteNotFoundException;
@@ -43,10 +44,11 @@ public class EventQuoteController {
 	 * @param request
 	 * @return
 	 * @throws ValidationException
+	 * @throws EventQuoteNotFoundException
 	 */
 	@PostMapping(value = "/quote", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EventQuoteResponse> createEventQuote(@RequestBody @Valid EventQuoteRequest request)
-			throws ValidationException {
+			throws ValidationException, EventQuoteNotFoundException {
 		return new ResponseEntity<EventQuoteResponse>(eventQuoteService.createEventQuote(request), HttpStatus.OK);
 	}
 
@@ -60,9 +62,9 @@ public class EventQuoteController {
 	 * @throws EventQuoteNotFoundException
 	 */
 	@GetMapping(value = "/quote/{quoteId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<EventQuoteResponse> getEventQuote(@PathVariable(name = "quoteId") String quoteId)
+	public ResponseEntity<EventQuoteDetails> getEventQuote(@PathVariable(name = "quoteId") String quoteId)
 			throws EventQuoteNotFoundException {
-		return new ResponseEntity<EventQuoteResponse>(eventQuoteService.getEventQuote(quoteId), HttpStatus.OK);
+		return new ResponseEntity<EventQuoteDetails>(eventQuoteService.getEventQuote(quoteId), HttpStatus.OK);
 	}
 
 	/**
@@ -73,8 +75,8 @@ public class EventQuoteController {
 	 * @return
 	 */
 	@GetMapping(value = "/quotes", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<EventQuoteResponse>> getAllEventQuotes() {
-		return new ResponseEntity<List<EventQuoteResponse>>(eventQuoteService.getAllEventQuotes(), HttpStatus.OK);
+	public ResponseEntity<List<EventQuoteDetails>> getAllEventQuotes() {
+		return new ResponseEntity<List<EventQuoteDetails>>(eventQuoteService.getAllEventQuotes(), HttpStatus.OK);
 	}
 
 }
