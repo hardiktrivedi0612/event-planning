@@ -1,9 +1,32 @@
-# event-planning
+#Event Planning
+
 RESTful API for an Event Planning company to provide quote estimates to its clients
 
-## This project has 2 endpoints:
+## Implementation Details:
+- RESTFul APIs created using Spring Boot
+- IDE used Spring Tool Suite
+- Yahoo Weather API used to get weather forecast
+- Swagger used for API documentation
+- JUnit used for unit testing
+
+## How to run:
+- Import the project to an IDE such as Eclipse, Spring Tool Suite that can build and run Maven projects
+- Run the web service. We can run the web services in 2 ways:
+    1. Run the application directly on the IDE.
+    2. Build the project on the IDE to create the jar file and then run the JAR file.
+- Navigate to a browser and navigate to "http://localhost:10001/swagger-ui.html". This will give the documentation for the API
+- Open Postman and test the endpoints using the Swagger documentation. Or use the link: [Postman Import] (https://www.getpostman.com/collections/4e7ba20b4bb9af5eb785) to import the collection directly into your Postman
 
 
+## Assumptions made by me for this project:
+- A minimum of 1 head count will be be required to give a quote i.e. we cannot estimate a price for 0 or less people.
+- An event can be scheduled only after today.
+- Ranges provided for head count quote estimate calculation are start exclusive and end inclusive. And there are no gaps in the ranges.
+- Yahoo weather API failures would lead to us not adding the charge to the quote
+- Yahoo weather API only forecasts for 10 days, so for event dates later than that would not have that charge added to the quote.
+
+
+## This project has 3 endpoints:
 ### /v1/quote: 
 This is a POST request that the user can use to get the quote estimate for a given input. The input to the API will be a JSON as follows:
 ```
@@ -67,6 +90,79 @@ The response of the API will be a JSON as follows:
 }
 ```
 
+### /v1/quotes
+This is a GET request that the user can use to get all the quotes that have been created by the users. Only certain authorized users will have access to this endpoint.
+The response for this API can be given as follows:
+```
+[
+    {
+        "quoteId": "EQZ4CF7w",
+        "headCount": 12,
+        "eventType": "MUSICAL",
+        "eventDate": "2018-11-28",
+        "quotePrice": 26000,
+        "name": "Test user",
+        "phoneNumber": "1234567890",
+        "email": "testEmail@gmail.com",
+        "city": "Dallas",
+        "links": [
+            {
+                "rel": "self",
+                "href": "http://localhost:10001/v1/EQZ4CF7w",
+                "hreflang": null,
+                "media": null,
+                "title": null,
+                "type": null,
+                "deprecation": null
+            }
+        ]
+    },
+    {
+        "quoteId": "EQG03ttC",
+        "headCount": 12,
+        "eventType": "MUSICAL",
+        "eventDate": "2018-11-28",
+        "quotePrice": 26000,
+        "name": "Test user",
+        "phoneNumber": "1234567890",
+        "email": "testEmail@gmail.com",
+        "city": "Dallas",
+        "links": [
+            {
+                "rel": "self",
+                "href": "http://localhost:10001/v1/EQG03ttC",
+                "hreflang": null,
+                "media": null,
+                "title": null,
+                "type": null,
+                "deprecation": null
+            }
+        ]
+    },
+    {
+        "quoteId": "EQnSveh1",
+        "headCount": 12,
+        "eventType": "MUSICAL",
+        "eventDate": "2018-11-28",
+        "quotePrice": 26000,
+        "name": "Test user",
+        "phoneNumber": "1234567890",
+        "email": "testEmail@gmail.com",
+        "city": "Dallas",
+        "links": [
+            {
+                "rel": "self",
+                "href": "http://localhost:10001/v1/EQnSveh1",
+                "hreflang": null,
+                "media": null,
+                "title": null,
+                "type": null,
+                "deprecation": null
+            }
+        ]
+    }
+]
+```
 
 
 ## The quote is determined based on the following rules:
