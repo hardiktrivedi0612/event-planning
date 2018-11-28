@@ -3,6 +3,8 @@ package com.planning.event.service.impl;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import com.planning.event.service.QuoteCalculationService;
 @ConfigurationProperties("month-condition-quote-config")
 public class MonthConditionQuoteCalculationServiceImpl implements QuoteCalculationService {
 
+	private static final Logger logger = LoggerFactory.getLogger(MonthConditionQuoteCalculationServiceImpl.class);
+
 	private Set<Integer> monthsList;
 
 	private BigDecimal quotePrice;
@@ -35,8 +39,10 @@ public class MonthConditionQuoteCalculationServiceImpl implements QuoteCalculati
 	@Override
 	public BigDecimal calculateQuotePrice(EventQuoteRequest request) {
 		if (monthsList.contains(request.getEventDate().getMonthValue())) {
+			logger.debug("Months condition calculation value : {}", quotePrice);
 			return quotePrice;
 		}
+		logger.debug("months condition calculation value : {}", BigDecimal.ZERO);
 		return BigDecimal.ZERO;
 	}
 

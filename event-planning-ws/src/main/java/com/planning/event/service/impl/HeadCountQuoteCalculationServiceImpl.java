@@ -3,6 +3,8 @@ package com.planning.event.service.impl;
 import java.math.BigDecimal;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import com.planning.event.service.QuoteCalculationService;
 @Service
 @ConfigurationProperties("head-count-quote-config")
 public class HeadCountQuoteCalculationServiceImpl implements QuoteCalculationService {
+
+	private static final Logger logger = LoggerFactory.getLogger(HeadCountQuoteCalculationServiceImpl.class);
 
 	private TreeMap<Integer, BigDecimal> priceByRange;
 
@@ -39,6 +43,8 @@ public class HeadCountQuoteCalculationServiceImpl implements QuoteCalculationSer
 		// 3. There is no gap in the ranges
 
 		BigDecimal quotePrice = priceByRange.floorEntry(request.getHeadCount()).getValue();
+
+		logger.debug("Head count price found as : {}", quotePrice);
 
 		return quotePrice.multiply(new BigDecimal(request.getHeadCount()));
 

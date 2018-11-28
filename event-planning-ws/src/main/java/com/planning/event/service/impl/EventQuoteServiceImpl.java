@@ -3,6 +3,8 @@ package com.planning.event.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -26,6 +28,8 @@ import com.planning.event.util.ValidationUtil;
  */
 @Service
 public class EventQuoteServiceImpl implements EventQuoteService {
+
+	private static final Logger logger = LoggerFactory.getLogger(EventQuoteServiceImpl.class);
 
 	@Autowired
 	private ValidationUtil validationUtil;
@@ -80,6 +84,7 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 		if (response != null) {
 			return response;
 		}
+		logger.info("Invalid quote id : {} sent in the request!", quoteId);
 		throw new EventQuoteNotFoundException(quoteId);
 	}
 
@@ -110,6 +115,7 @@ public class EventQuoteServiceImpl implements EventQuoteService {
 				.values()) {
 			quotePrice = quotePrice.add(service.calculateQuotePrice(request));
 		}
+		logger.debug("Price calculated as : {}", quotePrice);
 		return quotePrice;
 
 	}
