@@ -109,12 +109,7 @@ The response for this API can be given as follows:
         "links": [
             {
                 "rel": "self",
-                "href": "http://localhost:10001/v1/EQZ4CF7w",
-                "hreflang": null,
-                "media": null,
-                "title": null,
-                "type": null,
-                "deprecation": null
+                "href": "http://localhost:10001/v1/EQZ4CF7w"
             }
         ]
     },
@@ -131,12 +126,7 @@ The response for this API can be given as follows:
         "links": [
             {
                 "rel": "self",
-                "href": "http://localhost:10001/v1/EQG03ttC",
-                "hreflang": null,
-                "media": null,
-                "title": null,
-                "type": null,
-                "deprecation": null
+                "href": "http://localhost:10001/v1/EQG03ttC"
             }
         ]
     },
@@ -153,12 +143,7 @@ The response for this API can be given as follows:
         "links": [
             {
                 "rel": "self",
-                "href": "http://localhost:10001/v1/EQnSveh1",
-                "hreflang": null,
-                "media": null,
-                "title": null,
-                "type": null,
-                "deprecation": null
+                "href": "http://localhost:10001/v1/EQnSveh1"
             }
         ]
     }
