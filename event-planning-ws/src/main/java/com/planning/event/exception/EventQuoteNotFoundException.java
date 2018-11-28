@@ -7,7 +7,6 @@ package com.planning.event.exception;
  * 
  * @author hatrivedi
  * @date Nov 26, 2018
- * @since 2.5
  */
 public class EventQuoteNotFoundException extends Exception {
 	private static final long serialVersionUID = 1L;
