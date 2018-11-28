@@ -66,3 +66,11 @@ The response of the API will be a JSON as follows:
     ]
 }
 ```
+
+
+
+## The quote is determined based on the following rules:
+- Head count: 0-100 the price per person 2000. 100-500 the price will be 1500, 500 and up price is 1000.
+- Weather condition if the weather forecast shows that it will be cold or rainy in the requested date, 5000 flat lee will be added. 
+- If the event will be in January, November, or December 3000 flat fee will be added to the total 
+- For musical events, 1000 discount should be applied.
