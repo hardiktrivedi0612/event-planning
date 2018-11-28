@@ -1,4 +1,4 @@
-#Event Planning
+# Event Planning
 
 RESTful API for an Event Planning company to provide quote estimates to its clients
 
@@ -8,6 +8,7 @@ RESTful API for an Event Planning company to provide quote estimates to its clie
 - Yahoo Weather API used to get weather forecast
 - Swagger used for API documentation
 - JUnit used for unit testing
+- Used Memory (Map) as a datastore to save the request details to be retrieved later. So the data will be lost if the application is restarted.
 
 ## How to run:
 - Import the project to an IDE such as Eclipse, Spring Tool Suite that can build and run Maven projects
